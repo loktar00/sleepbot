@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { confirm } from '@inquirer/prompts';
+import prompt from 'inquirer-interactive-list-prompt';
 import { getKeypairFromEnvironment } from "@solana-developers/node-helpers";
-import { Connection, Keypair, VersionedTransaction, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { Connection, Keypair, VersionedTransaction, PublicKey } from '@solana/web3.js';
 import { JUP_PRICE, SOL_TOKEN } from "./constants.mjs";
 import { createAccount } from './utils/utils.mjs';
 import { getTokenPrice } from './actions/tokenPrice.mjs';
@@ -17,17 +18,26 @@ async function getPrice (ca, solAmount) {
     console.log(`The amount of ${mintSymbol} for ${solAmount} SOL is ${priceMult}`);
 }
 
-async function main() {
+async function price() {
     const userData = await getTokenPrice();
     await getPrice(userData.CA, userData.SOLAmount);
+    main();
+}
 
-    const userContinue = await confirm({ message: 'Do you want to lookup another token?' });
+async function main() {
+    const option = await prompt({
+        message: 'Select an option:',
+        choices: [
+        { name: 'Get Token Price', value: 'price', key: 'p' },
+        { name: 'Quit', value: 'quit', key: 'q' },
+        ],
+        renderSelected: choice => `❯ ${choice.name} (${choice.key})`, // optional
+        renderUnselected: choice => `  ${choice.name} (${choice.key})`, // optional
+    });
 
-    if (userContinue) {
-        main();
+    if (option === 'price') {
+        await price();
     }
-
-    return false;
 }
 
 main();
