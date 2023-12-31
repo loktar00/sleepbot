@@ -1,0 +1,22 @@
+{
+  "name": "sleepbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Brown",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@inquirer/prompts": "^3.3.0",
+    "@jup-ag/api": "^6.0.10",
+    "@project-serum/anchor": "^0.26.0",
+    "@solana-developers/node-helpers": "^1.2.1",
+    "@solana/web3.js": "^1.87.6",
+    "bs58": "^5.0.0",
+    "cross-fetch": "^4.0.0",
+    "dotenv": "^16.3.1",
+    "inquirer": "^9.2.12"
+  }
+}
